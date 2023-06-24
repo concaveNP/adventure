@@ -1,38 +1,18 @@
 
 import pygame
+import SpriteSheet
+import Game
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
 
-        # Load the spritesheet of frames for this player
-        self.sprites = SpriteSheet("resources/player.png")
+        # Load the sprite sheet of frames for this player
+        self.sprites = SpriteSheet("images/player.png")
 
-        self.stillRight = self.sprites.image_at((0, 0, 30, 42))
-        self.stillLeft = self.sprites.image_at((0, 42, 30, 42))
+        self.still = self.sprites.image_at((5, 24, 12, 31))
 
-        # List of frames for each animation
-        self.runningRight = (self.sprites.image_at((0, 84, 30, 42)),
-                             self.sprites.image_at((30, 84, 30, 42)),
-                             self.sprites.image_at((60, 84, 30, 42)),
-                             self.sprites.image_at((90, 84, 30, 42)),
-                             self.sprites.image_at((120, 84, 30, 42)))
-
-        self.runningLeft = (self.sprites.image_at((0, 126, 30, 42)),
-                            self.sprites.image_at((30, 126, 30, 42)),
-                            self.sprites.image_at((60, 126, 30, 42)),
-                            self.sprites.image_at((90, 126, 30, 42)),
-                            self.sprites.image_at((120, 126, 30, 42)))
-
-        self.jumpingRight = (self.sprites.image_at((30, 0, 30, 42)),
-                             self.sprites.image_at((60, 0, 30, 42)),
-                             self.sprites.image_at((90, 0, 30, 42)))
-
-        self.jumpingLeft = (self.sprites.image_at((30, 42, 30, 42)),
-                            self.sprites.image_at((60, 42, 30, 42)),
-                            self.sprites.image_at((90, 42, 30, 42)))
-
-        self.image = self.stillRight
+        self.image = self.still
 
         # Set player position
         self.rect = self.image.get_rect()
@@ -51,6 +31,8 @@ class Player(pygame.sprite.Sprite):
 
         # Players current level, set after object initialized in game constructor
         self.currentLevel = None
+
+        self.
 
     def update(self):
         # Update player position by change
