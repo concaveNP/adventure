@@ -32,10 +32,18 @@ class Game:
                     self.player.goLeft()
                 elif event.key == pygame.K_RIGHT:
                     self.player.goRight()
+                elif event.key == pygame.K_UP:
+                    self.player.goUp()
+                elif event.key == pygame.K_DOWN:
+                    self.player.goDown()
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT and self.player.changeX < 0:
                     self.player.stop()
                 elif event.key == pygame.K_RIGHT and self.player.changeX > 0:
+                    self.player.stop()
+                elif event.key == pygame.K_UP and self.player.changeY < 0:
+                    self.player.stop()
+                elif event.key == pygame.K_DOWN and self.player.changeY > 0:
                     self.player.stop()
 
         return False
