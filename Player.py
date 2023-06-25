@@ -51,18 +51,6 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.rect.left = tile.rect.right
 
-        # # Move screen if player reaches screen bounds
-        # if self.rect.right >= self.settings.SCREEN_WIDTH - 200:
-        #     difference = self.rect.right - (self.settings.SCREEN_WIDTH - 200)
-        #     self.rect.right = self.settings.SCREEN_WIDTH - 200
-        #     self.currentLevel.shift_level(-difference)
-        #
-        # # Move screen is player reaches screen bounds
-        # if self.rect.left <= 200:
-        #     difference = 200 - self.rect.left
-        #     self.rect.left = 200
-        #     self.currentLevel.shift_level(difference)
-
         # Update player position by change
         self.rect.y += self.changeY
 
@@ -77,29 +65,6 @@ class Player(pygame.sprite.Sprite):
                 self.rect.bottom = tile.rect.top
             else:
                 self.rect.top = tile.rect.bottom
-
-        # # If there are tiles in that list
-        # if len(tile_hit_list) > 0:
-        #     # Move player to correct side of that tile, update player frame
-        #     for tile in tile_hit_list:
-        #         if self.changeY > 0:
-        #             self.rect.bottom = tile.rect.top
-        #             self.changeY = 1
-        #
-        #             if self.direction == "right":
-        #                 self.image = self.still
-        #             else:
-        #                 self.image = self.still
-        #         else:
-        #             self.rect.top = tile.rect.bottom
-        #             self.changeY = 0
-
-        # # If player is on ground and running, update running animation
-        # if self.running and self.changeY == 1:
-        #     if self.direction == "right":
-        #         self.image = self.runningRight[self.runningFrame]
-        #     else:
-        #         self.image = self.runningLeft[self.runningFrame]
 
         # When correct amount of time has passed, go to next frame
         if pygame.time.get_ticks() - self.runningTime > 50:
