@@ -1,57 +1,52 @@
-
-import sys
 import pygame
 from Settings import Settings
-from pygame.locals import *
+from Level import Level
+from Player import Player
 
-file = './images/tile_sheet.png'
-
-# Tiled map layer of tiles that you collide with
-MAP_COLLISION_LAYER = 1
 
 class Game:
     """Overall class to manage game assets and behavior."""
 
     def __init__(self):
-        """Initialize the game, and create resources."""
-        pygame.init()
+
+        # Get the game settings
         self.settings = Settings()
 
-        self.screen = pygame.display.set_mode(
-            (self.settings.screen_width, self.settings.screen_height))
-        pygame.display.set_caption("Adventure")
+        # Set up a level to load
+        self.currentLevelNumber = 0
+        self.levels = []
+        self.levels.append(Level(file_name="tilemap/gold_castle.tmx"))
+        self.currentLevel = self.levels[self.currentLevelNumber]
 
-    def run_game(self):
-        """Start the main loop for the game."""
-        while True:
-            self._check_events()
-            self._update_screen()
+        # Create a player object and set the level it is in
+        self.player = Player(x=self.settings.INITIAL_PLAYER_POSITION__X, y=self.settings.INITIAL_PLAYER_POSITION__Y)
+        self.player.currentLevel = self.currentLevel
 
-    def _check_events(self):
+    def process_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit()
+                return True
+            # Get keyboard input and move player accordingly
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    sys.exit()
-                elif event.key == pygame.K_l:
-                    self.load_image(file)
+                if event.key == pygame.K_LEFT:
+                    self.player.goLeft()
+                elif event.key == pygame.K_RIGHT:
+                    self.player.goRight()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT and self.player.changeX < 0:
+                    self.player.stop()
+                elif event.key == pygame.K_RIGHT and self.player.changeX > 0:
+                    self.player.stop()
 
+        return False
 
-    def _update_screen(self):
-        self.screen.fill(self.settings.bg_color)
+    def run_logic(self):
+        # Update player movement and collision logic
+        self.player.update()
+
+    # Draw level, player, overlay
+    def draw(self, screen):
+        screen.fill(self.settings.BACKGROUND)
+        self.currentLevel.draw(screen)
+        self.player.draw(screen)
         pygame.display.flip()
-
-    def load_image(self, file):
-        self.file = file
-        self.image = pygame.image.load(file)
-        self.rect = self.image.get_rect()
-
-        self.screen = pygame.display.set_mode(self.rect.size)
-        pygame.display.set_caption(f'size:{self.rect.size}')
-        self.screen.blit(self.image, self.rect)
-        pygame.display.update()
-
-if __name__ == '__main__':
-    my_game = Game()
-    my_game.run_game()

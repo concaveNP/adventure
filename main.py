@@ -1,6 +1,6 @@
 import pygame
-import Game
-import Settings
+from Game import Game
+from Settings import Settings
 
 
 def main():
@@ -9,8 +9,8 @@ def main():
     settings = Settings()
 
     pygame.init()
-    screen = pygame.display.set_mode([settings.screen_width, settings.screen_height])
-    pygame.display.set_caption(settings.title)
+    screen = pygame.display.set_mode([settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT])
+    pygame.display.set_caption(settings.TITLE)
     clock = pygame.time.Clock()
     done = False
     game = Game()
@@ -20,7 +20,7 @@ def main():
         done = game.process_events()
         game.run_logic()
         game.draw(screen)
-        clock.tick(settings.clock_tick_speed)
+        clock.tick(settings.CLOCK_TICK_SPEED)
 
     pygame.quit()
 
